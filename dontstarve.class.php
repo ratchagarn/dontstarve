@@ -82,7 +82,7 @@ class DontStarve {
 
     // if not found saves folder then create it
     if (!is_dir($this->backup_save_path)) {
-      mkdir($this->backup_save_path)l
+      mkdir($this->backup_save_path);
     }
 
     $copy_path = $this->backup_save_path . '/' . 'backup_' . time();
