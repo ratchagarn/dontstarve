@@ -80,6 +80,11 @@ class DontStarve {
   
   public function backup() {
 
+    // if not found saves folder then create it
+    if (!is_dir($this->backup_save_path)) {
+      mkdir($this->backup_save_path)l
+    }
+
     $copy_path = $this->backup_save_path . '/' . 'backup_' . time();
     mkdir($copy_path);
 
