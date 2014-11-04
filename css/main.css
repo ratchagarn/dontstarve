@@ -1,0 +1,77 @@
+body {
+  padding-bottom: 100px;
+}
+
+.logo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 128px;
+  height: 128px;
+  background: url(../images/logo.png) no-repeat center bottom;
+  background-size: 100%;
+}
+
+.icon-btn {
+  display: inline-block;
+  padding: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.page-header {
+  position: relative;
+  padding-left: 130px;
+  margin-top: 85px;
+}
+
+
+.busy {
+  opacity: .4;
+}
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ *
+ * File list
+ *
+-* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#file-lists {
+  margin-top: 40px;
+  -webkit-transition: .2s;
+  -moz-transition: .2s;
+  transition: .2s;
+}
+
+#file-lists td {
+  vertical-align: middle;
+}
+
+#file-lists .name {
+  width: 60%;
+}
+
+#file-lists .created,
+#file-lists .action {
+  width: 20%;
+}
+
+#file-lists .glyphicon-trash {
+  color: #900;
+}
+
+
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+ *
+ * Responsive
+ *
+-* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+@media(max-width: 640px) {
+  .page-header {
+    font-size: 20px;
+  }
+}

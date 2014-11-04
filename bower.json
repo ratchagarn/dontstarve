@@ -1,0 +1,26 @@
+{
+  "name": "dontstarve",
+  "version": "0.1.0",
+  "authors": [
+    "Ratchagarn <ratchagarn@gmail.com>"
+  ],
+  "description": "Don't Strave backup save file manage",
+  "main": "index.php",
+  "keywords": [
+    "Don't",
+    "strave"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.0",
+    "react": "~0.12.0",
+    "moment": "~2.8.3"
+  }
+}
