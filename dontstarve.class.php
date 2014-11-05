@@ -41,7 +41,7 @@ class DontStarve {
    * list backup file list
    * ============================================================
    * @name fileList
-   * @param {boolean} convert array to json or not
+   * @param {Boolean} convert array to json or not
    * @return {Array} current file list
    */
   
@@ -49,7 +49,7 @@ class DontStarve {
 
     $file_lists = array();
 
-    foreach (glob($this->backup_save_path . '/*') as $file_path) {
+    foreach (glob($this->backup_save_path . '/*') as $i => $file_path) {
       $file_name = DontStarve::getFileName($file_path);
       $file_lists[] = array(
         'id' => base64_encode($file_path),
@@ -58,7 +58,13 @@ class DontStarve {
       );
     }
 
-    rsort($file_lists);
+
+    // sort by created time
+    function sortByCreared($a, $b) {
+      return $b['created'] - $a['created'];
+    }
+    usort($file_lists, 'sortByCreared');
+
 
     if ($to_json) {
       return json_encode($file_lists);
@@ -75,17 +81,22 @@ class DontStarve {
    * create backup file
    * ============================================================
    * @name backup
+   * @param {String} backup file name
    * @return {Array} current file list
    */
   
-  public function backup() {
+  public function backup($file_name = '') {
 
     // if not found saves folder then create it
     if (!is_dir($this->backup_save_path)) {
       mkdir($this->backup_save_path);
     }
 
-    $copy_path = $this->backup_save_path . '/' . 'backup_' . time();
+    if ($file_name === '') {
+      $file_name = 'backup_' . time();
+    }
+
+    $copy_path = $this->backup_save_path . '/' . $file_name;
     mkdir($copy_path);
 
     foreach (glob($this->save_file_locaton . '/*') as $file_path) {

@@ -40,7 +40,8 @@ if ($action === 'file_list') {
 else if ($action === 'backup') {
 
   sleep(1);
-  echo $DontStrave->backup();
+  $file_name = isset( $_POST['file_name'] ) ? $_POST['file_name'] : '';
+  echo $DontStrave->backup( $file_name );
 
 }
 

@@ -39,7 +39,8 @@ root.BackupBtn = React.createClass({
   componentDidMount: function() {
     var $node = $(this.getDOMNode()),
         $btn = $node.find('button'),
-        $img = $node.find('img');
+        $img = $node.find('img'),
+        $save_file_name = $node.find('#save-file-name');
 
     $btn.on('click', function() {
 
@@ -47,7 +48,8 @@ root.BackupBtn = React.createClass({
         type: 'POST',
         url: 'api.php',
         data: {
-          action: 'backup'
+          action: 'backup',
+          file_name: $save_file_name.val()
         },
         beforeSend: function() {
           $img.removeClass('hide');
@@ -66,6 +68,7 @@ root.BackupBtn = React.createClass({
       })
       .always(function() {
         $img.addClass('hide');
+        $save_file_name.val('');
       });
 
     });
@@ -73,10 +76,24 @@ root.BackupBtn = React.createClass({
 
   render: function() {
 
+    var style = {
+      button_icon: {
+        marginRight: '10px'
+      },
+      loader: {
+        marginLeft: '10px'
+      }
+    }
+
     return (
       <div>
-        <button id="backup" className="btn btn-primary">Backup save file !</button>
-        <img src="images/ajax-loader.gif" alt="" className="hide" style={{ marginLeft: '10px' }} />
+        <label>Save file name:</label>
+        <input type="text" id="save-file-name" className="form-control" placeholder="Save file name... (optinal)" />
+        <button id="backup" className="btn btn-primary">
+          <i className="glyphicon glyphicon-save" style={style.button_icon} />
+          Backup save file !
+        </button>
+        <img src="images/ajax-loader.gif" alt="" className="hide" style={style.loader} />
       </div>
     );
 
@@ -218,14 +235,15 @@ root.FileLists = React.createClass({
     $.map(this.state.files, function(item, i) {
       tpl['row-' + i] = (
         <tr>
+          <td className="no">{i + 1}</td>
           <td className="name">{item.name}</td>
-          <td className="created">{moment(item.created).fromNow()}</td>
+          <td className="created">{moment(item.created).format('MMM DD, YYYY - HH:mm:ss')}</td>
           <td className="action" data-id={item.id}>
-            <span className="icon-btn btn-delete toggle-tooltip" data-title="Delete this backup">
-              <i className="glyphicon glyphicon-trash" />
-            </span>
             <span className="icon-btn btn-restore toggle-tooltip" data-title="Restore this backup">
               <i className="glyphicon glyphicon-floppy-open" />
+            </span>
+            <span className="icon-btn btn-delete toggle-tooltip" data-title="Delete this backup">
+              <i className="glyphicon glyphicon-trash" />
             </span>
           </td>
         </tr>
@@ -235,6 +253,7 @@ root.FileLists = React.createClass({
     return (
       <table className="table table-striped">
         <thead>
+          <th className="no">#</th>
           <th className="name">File name</th>
           <th className="created">Created</th>
           <th className="action">Action</th>

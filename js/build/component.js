@@ -39,7 +39,8 @@ root.BackupBtn = React.createClass({displayName: 'BackupBtn',
   componentDidMount: function() {
     var $node = $(this.getDOMNode()),
         $btn = $node.find('button'),
-        $img = $node.find('img');
+        $img = $node.find('img'),
+        $save_file_name = $node.find('#save-file-name');
 
     $btn.on('click', function() {
 
@@ -47,7 +48,8 @@ root.BackupBtn = React.createClass({displayName: 'BackupBtn',
         type: 'POST',
         url: 'api.php',
         data: {
-          action: 'backup'
+          action: 'backup',
+          file_name: $save_file_name.val()
         },
         beforeSend: function() {
           $img.removeClass('hide');
@@ -66,6 +68,7 @@ root.BackupBtn = React.createClass({displayName: 'BackupBtn',
       })
       .always(function() {
         $img.addClass('hide');
+        $save_file_name.val('');
       });
 
     });
@@ -73,10 +76,24 @@ root.BackupBtn = React.createClass({displayName: 'BackupBtn',
 
   render: function() {
 
+    var style = {
+      button_icon: {
+        marginRight: '10px'
+      },
+      loader: {
+        marginLeft: '10px'
+      }
+    }
+
     return (
       React.createElement("div", null, 
-        React.createElement("button", {id: "backup", className: "btn btn-primary"}, "Backup save file !"), 
-        React.createElement("img", {src: "images/ajax-loader.gif", alt: "", className: "hide", style: { marginLeft: '10px'}})
+        React.createElement("label", null, "Save file name:"), 
+        React.createElement("input", {type: "text", id: "save-file-name", className: "form-control", placeholder: "Save file name... (optinal)"}), 
+        React.createElement("button", {id: "backup", className: "btn btn-primary"}, 
+          React.createElement("i", {className: "glyphicon glyphicon-save", style: style.button_icon}), 
+          "Backup save file !"
+        ), 
+        React.createElement("img", {src: "images/ajax-loader.gif", alt: "", className: "hide", style: style.loader})
       )
     );
 
@@ -218,14 +235,15 @@ root.FileLists = React.createClass({displayName: 'FileLists',
     $.map(this.state.files, function(item, i) {
       tpl['row-' + i] = (
         React.createElement("tr", null, 
+          React.createElement("td", {className: "no"}, i + 1), 
           React.createElement("td", {className: "name"}, item.name), 
-          React.createElement("td", {className: "created"}, moment(item.created).fromNow()), 
+          React.createElement("td", {className: "created"}, moment(item.created).format('MMM DD, YYYY - HH:mm:ss')), 
           React.createElement("td", {className: "action", 'data-id': item.id}, 
-            React.createElement("span", {className: "icon-btn btn-delete toggle-tooltip", 'data-title': "Delete this backup"}, 
-              React.createElement("i", {className: "glyphicon glyphicon-trash"})
-            ), 
             React.createElement("span", {className: "icon-btn btn-restore toggle-tooltip", 'data-title': "Restore this backup"}, 
               React.createElement("i", {className: "glyphicon glyphicon-floppy-open"})
+            ), 
+            React.createElement("span", {className: "icon-btn btn-delete toggle-tooltip", 'data-title': "Delete this backup"}, 
+              React.createElement("i", {className: "glyphicon glyphicon-trash"})
             )
           )
         )
@@ -235,6 +253,7 @@ root.FileLists = React.createClass({displayName: 'FileLists',
     return (
       React.createElement("table", {className: "table table-striped"}, 
         React.createElement("thead", null, 
+          React.createElement("th", {className: "no"}, "#"), 
           React.createElement("th", {className: "name"}, "File name"), 
           React.createElement("th", {className: "created"}, "Created"), 
           React.createElement("th", {className: "action"}, "Action")
