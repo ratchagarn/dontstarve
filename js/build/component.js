@@ -251,15 +251,17 @@ root.FileLists = React.createClass({displayName: 'FileLists',
     });
     
     return (
-      React.createElement("table", {className: "table table-striped"}, 
-        React.createElement("thead", null, 
-          React.createElement("th", {className: "no"}, "#"), 
-          React.createElement("th", {className: "name"}, "File name"), 
-          React.createElement("th", {className: "created"}, "Created"), 
-          React.createElement("th", {className: "action"}, "Action")
-        ), 
-        React.createElement("tbody", null, 
-          tpl
+      React.createElement("div", {className: "table-responsive"}, 
+        React.createElement("table", {className: "table table-striped"}, 
+          React.createElement("thead", null, 
+            React.createElement("th", {className: "no"}, "#"), 
+            React.createElement("th", {className: "name"}, "File name"), 
+            React.createElement("th", {className: "created"}, "Created"), 
+            React.createElement("th", {className: "action"}, "Action")
+          ), 
+          React.createElement("tbody", null, 
+            tpl
+          )
         )
       )
     );

@@ -251,17 +251,19 @@ root.FileLists = React.createClass({
     });
     
     return (
-      <table className="table table-striped">
-        <thead>
-          <th className="no">#</th>
-          <th className="name">File name</th>
-          <th className="created">Created</th>
-          <th className="action">Action</th>
-        </thead>
-        <tbody>
-          {tpl}
-        </tbody>
-      </table>
+      <div className="table-responsive">
+        <table className="table table-striped">
+          <thead>
+            <th className="no">#</th>
+            <th className="name">File name</th>
+            <th className="created">Created</th>
+            <th className="action">Action</th>
+          </thead>
+          <tbody>
+            {tpl}
+          </tbody>
+        </table>
+      </div>
     );
 
   }
